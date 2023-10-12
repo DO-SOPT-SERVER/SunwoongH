@@ -17,7 +17,7 @@ public class ApiResponse<T> {
     @JsonInclude(NON_NULL)
     private final T data;
 
-    public static <T> ApiResponse<?> of(final HttpStatus httpStatus, final boolean isSuccess) {
+    public static ApiResponse<?> of(final HttpStatus httpStatus, final boolean isSuccess) {
         return ApiResponse.builder()
                 .code(httpStatus.value())
                 .status(httpStatus.name())
