@@ -1,16 +1,14 @@
 package org.sopt.api.post.service;
 
 import lombok.RequiredArgsConstructor;
-import org.sopt.common.error.ConflictException;
-import org.sopt.common.error.ErrorStatus;
+import org.sopt.api.post.dto.request.PostSaveOrUpdateRequest;
+import org.sopt.api.post.dto.response.PostGetResponse;
+import org.sopt.api.post.dto.response.PostSaveResponse;
+import org.sopt.common.error.EntityNotFoundException;
 import org.sopt.domain.member.domain.Member;
 import org.sopt.domain.member.repository.MemberRepository;
 import org.sopt.domain.post.domain.Category;
 import org.sopt.domain.post.domain.Post;
-import org.sopt.api.post.dto.request.PostSaveOrUpdateRequest;
-import org.sopt.api.post.dto.response.PostGetResponse;
-import org.sopt.api.post.dto.response.PostSaveResponse;
-
 import org.sopt.domain.post.repository.CategoryRepository;
 import org.sopt.domain.post.repository.PostRepository;
 import org.springframework.data.domain.Pageable;
@@ -33,8 +31,7 @@ public class PostService {
     @Transactional
     public PostSaveResponse savePost(Long memberId, PostSaveOrUpdateRequest postSaveOrUpdateRequest) {
         Member findMember = findMember(memberId);
-        validateDuplicateCategory(postSaveOrUpdateRequest.categoryContent());
-        Category savedCategory = createCategoryAndGetSavedCategory(postSaveOrUpdateRequest);
+        Category savedCategory = createCategoryAndGetSavedCategoryOrGetCategory(postSaveOrUpdateRequest);
         Post savedPost = createPostAndGetSavedPost(postSaveOrUpdateRequest, findMember, savedCategory);
         return PostSaveResponse.of(savedPost);
     }
@@ -67,15 +64,13 @@ public class PostService {
         return memberRepository.findByIdOrThrow(memberId);
     }
 
-    private void validateDuplicateCategory(String content) {
-        if (categoryRepository.existsByContent(content)) {
-            throw new ConflictException(ErrorStatus.DUPLICATE_CATEGORY);
+    private Category createCategoryAndGetSavedCategoryOrGetCategory(PostSaveOrUpdateRequest postSaveOrUpdateRequest) {
+        try {
+            return findCategory(postSaveOrUpdateRequest.categoryContent());
+        } catch (EntityNotFoundException e) {
+            Category category = createCategory(postSaveOrUpdateRequest.categoryContent());
+            return categoryRepository.save(category);
         }
-    }
-
-    private Category createCategoryAndGetSavedCategory(PostSaveOrUpdateRequest postSaveOrUpdateRequest) {
-        Category category = createCategory(postSaveOrUpdateRequest.categoryContent());
-        return categoryRepository.save(category);
     }
 
     private Post createPostAndGetSavedPost(PostSaveOrUpdateRequest postSaveOrUpdateRequest, Member member, Category category) {
@@ -90,5 +85,9 @@ public class PostService {
     private void updatePostAndCategory(PostSaveOrUpdateRequest postSaveOrUpdateRequest, Post post, Category category) {
         post.updateTitleAndContent(postSaveOrUpdateRequest.title(), postSaveOrUpdateRequest.postContent());
         category.updateContent(postSaveOrUpdateRequest.categoryContent());
+    }
+
+    private Category findCategory(String content) {
+        return categoryRepository.findByContentOrThrow(content);
     }
 }

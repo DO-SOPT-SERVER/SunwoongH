@@ -19,6 +19,7 @@ public enum ErrorStatus {
     ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND, "대상을 찾을 수 없습니다."),
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "회원을 찾을 수 없습니다."),
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "게시물을 찾을 수 없습니다."),
+    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "카테고리를 찾을 수 없습니다."),
 
     /**
      * 405 Method Not Allowed
@@ -30,7 +31,6 @@ public enum ErrorStatus {
      */
     CONFLICT(HttpStatus.CONFLICT, "이미 존재하는 리소스입니다."),
     DUPLICATE_MEMBER(HttpStatus.CONFLICT, "이미 존재하는 회원입니다."),
-    DUPLICATE_CATEGORY(HttpStatus.CONFLICT, "이미 존재하는 카테고리입니다."),
 
     /**
      * 500 Internal Server Error
