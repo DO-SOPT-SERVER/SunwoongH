@@ -6,3 +6,11 @@ dependencies {
     // common dependency
     implementation project(path: ':common')
 }
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}

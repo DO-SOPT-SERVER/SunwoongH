@@ -10,3 +10,7 @@ dependencies {
     // common dependency
     implementation project(path: ':common')
 }
+
+jar {
+    enabled = false
+}
