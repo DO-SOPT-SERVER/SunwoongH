@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.sopt.domain.member.domain.Member.createMember;
+import static org.sopt.domain.member.domain.Sopt.createSopt;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -48,7 +49,7 @@ public class MemberService {
     @Transactional
     public void updateMember(Long memberId, MemberUpdateRequest memberUpdateRequest) {
         Member findMember = memberRepository.findByIdOrThrow(memberId);
-        Sopt sopt = Sopt.createSopt(memberUpdateRequest.generation(), memberUpdateRequest.part());
+        Sopt sopt = createSopt(memberUpdateRequest.generation(), memberUpdateRequest.part());
         findMember.updateSopt(sopt);
     }
 
