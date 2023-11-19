@@ -21,7 +21,7 @@ jobs:
 
       - name: ✔️ application.yml 파일을 생성합니다.
         run: |
-          cd ./src/main
+          cd ./api/src/main
           mkdir resources
           cd ./resources
           echo "$APPLICATION" > ./application.yml
@@ -32,4 +32,4 @@ jobs:
         run: chmod +x gradlew
 
       - name: ✔️ gradle build 합니다.
-        run: ./gradlew build
+        run: ./gradlew api:build

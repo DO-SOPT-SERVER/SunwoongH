@@ -4,11 +4,14 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.3'
 }
 
-group = 'org.sopt'
-version = '0.0.1-SNAPSHOT'
-
-java {
+allprojects {
+    group = 'org.sopt'
+    version = '0.0.1-SNAPSHOT'
     sourceCompatibility = '17'
+
+    repositories {
+        mavenCentral()
+    }
 }
 
 configurations {
@@ -17,30 +20,21 @@ configurations {
     }
 }
 
-repositories {
-    mavenCentral()
-}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
-dependencies {
-    // spring boot
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    dependencies {
+        // lombok
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
 
-    // h2
-    runtimeOnly 'com.h2database:h2'
+        // test
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
 
-    // lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-
-    // test
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
-jar {
-    enabled = false
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
 }
