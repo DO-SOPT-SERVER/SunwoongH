@@ -21,7 +21,7 @@ jobs:
 
       - name: ✔️ create application.yml
         run: |
-          cd ./api/src/main
+          cd ./seminar-api/src/main
           mkdir resources
           cd ./resources
           echo "$APPLICATION" > ./application.yml
