@@ -32,7 +32,7 @@ public class ApiResponse<T> {
                 .build();
     }
 
-    private static ApiResponse<?> of(ErrorStatus errorStatus) {
+    public static ApiResponse<?> of(ErrorStatus errorStatus) {
         return builder()
                 .status(errorStatus.getHttpStatus().value())
                 .message(errorStatus.getMessage())

@@ -1,7 +1,6 @@
-package org.sopt.api.error;
+package org.sopt.api.common;
 
 import lombok.extern.slf4j.Slf4j;
-import org.sopt.api.common.ApiResponse;
 import org.sopt.common.error.BusinessException;
 import org.sopt.common.error.ErrorStatus;
 import org.springframework.http.ResponseEntity;
