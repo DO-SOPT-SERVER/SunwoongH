@@ -40,4 +40,4 @@ out/
 .DS_Store
 
 ### Yml ###
-api/src/main/resources/application.yml
+seminar-api/src/main/resources/application.yml
