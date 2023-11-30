@@ -1,0 +1,16 @@
+dependencies {
+    // spring data jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // h2
+    runtimeOnly 'com.h2database:h2'
+    // common dependency
+    implementation project(path: ':seminar-common')
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}

@@ -1,4 +1,5 @@
 rootProject.name = 'seminar'
-include 'api'
-include 'domain'
-include 'common'
+include 'seminar-api'
+include 'seminar-domain'
+include 'seminar-common'
+include 'seminar-infra'
